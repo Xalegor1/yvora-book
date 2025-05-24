@@ -6,8 +6,12 @@ import cors from "cors";
 import job from "./lib/cron.js";
 import { connectDB } from "./lib/db.js";
 
+const bodyParser = require("body-parser");
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+app.use(bodyParser.json({ limit: "10mb" })); // Увеличиваем лимит до 10MB
+app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 
 job.start();
 app.use(express.json());
